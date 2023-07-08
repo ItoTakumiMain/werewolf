@@ -12,6 +12,7 @@ class ViewsMainTerminal extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textController = TextEditingController();
+    final conversation = ref.watch(conversationProvider);
 
     void onSubmitted(String command) async {
       textController.clear();
@@ -23,9 +24,9 @@ class ViewsMainTerminal extends ConsumerWidget {
           now: DateTime.now()));
 
       final GptClient gptClinet = ref.watch(gptClientProvider);
-      final response = await gptClinet.request(command);
+      final response = await gptClinet.request(command, conversation);
       ref.read(conversationProvider.notifier).addMessage(Message(
-          speaker: 'AI',
+          speaker: 'アイ',
           content: response.message,
           emotion: response.emotion,
           now: DateTime.now()));
@@ -39,7 +40,7 @@ class ViewsMainTerminal extends ConsumerWidget {
             color: Colors.black.withOpacity(0.6),
             child: Column(children: [
               Text(
-                ref.watch(conversationProvider).messages.last.content,
+                conversation.messages.last.content,
                 style: const TextStyle(color: Colors.white, fontSize: 20),
               ),
               TextField(controller: textController, onSubmitted: onSubmitted),

@@ -8,4 +8,11 @@ class Conversation {
   Conversation add(Message message) {
     return Conversation(messages: [...messages, message]);
   }
+
+  @override
+  String toString() {
+    return messages
+        .map((message) => '${message.speaker}: ${message.content}')
+        .join('\n');
+  }
 }

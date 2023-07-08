@@ -2,6 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert' as convert;
 import 'package:werewolf/infrastructures/http_repositories/http_client.dart';
 import 'package:werewolf/infrastructures/http_repositories/gpt_client.dart';
+import 'package:werewolf/models/conversation.dart';
+import 'package:werewolf/models/emotion.dart';
 
 class FakeHttpClient implements HttpClient {
   final Map<String, dynamic> responseBody;
@@ -23,16 +25,16 @@ void main() {
     final Map<String, dynamic> fakeResponse = convert.jsonDecode(
         '{"id":"chatcmpl-7Dsuw9Qo7dhQvNKsMbWlYyrd4HzYR","object":"chat.completion","created":1683543722,"model":"gpt-3.5-turbo-0301","usage":{"prompt_tokens":14,"completion_tokens":5,"total_tokens":19},"choices":[{"message":{"role":"assistant","content":""},"finish_reason":"stop","index":0}]}');
     fakeResponse['choices'][0]['message']['content'] =
-        'fun", "message": "This is a test!"}';
+        '{"emotion": "fun", "message": "This is a test!"}';
 
     final HttpClient fakeHttpClient =
         FakeHttpClient(responseBody: fakeResponse);
-    final GptClientResponse actual =
-        await GptClient(httpClient: fakeHttpClient).request('');
+    final GptClientResponse actual = await GptClient(httpClient: fakeHttpClient)
+        .request('', Conversation(messages: []));
 
     expect(actual.message, equals('This is a test!'),
         reason: 'fakeResponseで設定したmessageが返ってくるべき');
-    expect(actual.emotion, equals('fun'),
+    expect(actual.emotion, equals(Emotion.fun),
         reason: 'fakeResponseで設定したemotionが返ってくるべき');
   });
 
@@ -47,7 +49,8 @@ void main() {
           FakeHttpClient(responseBody: fakeResponse);
       final GptClient gptClient = GptClient(httpClient: fakeHttpClient);
 
-      expect(() async => await gptClient.request(''),
+      expect(
+          () async => await gptClient.request('', Conversation(messages: [])),
           throwsA(isA<GptClientInvalidResponseException>()),
           reason: '例外が発生するべき');
     });
@@ -63,7 +66,8 @@ void main() {
           FakeHttpClient(responseBody: fakeResponse);
       final GptClient gptClient = GptClient(httpClient: fakeHttpClient);
 
-      expect(() async => await gptClient.request(''),
+      expect(
+          () async => await gptClient.request('', Conversation(messages: [])),
           throwsA(isA<GptClientInvalidResponseException>()),
           reason: 'emotionがないので例外が発生するべき');
     });

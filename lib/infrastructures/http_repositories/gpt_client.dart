@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:werewolf/infrastructures/http_repositories/http_client.dart';
+import 'package:werewolf/models/conversation.dart';
 import 'package:werewolf/models/emotion.dart';
 
 class GptClientInvalidResponseException implements Exception {}
@@ -11,14 +12,16 @@ class GptClient {
 
   GptClient({required this.httpClient});
 
-  Future<GptClientResponse> request(String query) async {
+  Future<GptClientResponse> request(String query, Conversation context) async {
     final Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
       HttpHeaders.authorizationHeader:
           'Bearer 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',
     };
-    final String prompt =
+    final String promptWithOutContext =
         await rootBundle.loadString('assets/gpt_client/prompt.txt');
+    final String prompt =
+        promptWithOutContext.replaceAll('{conversation}', context.toString());
 
     const responseStartWith = '';
     final Map<String, dynamic> requestBody = {
