@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:werewolf/infrastructures/http_repositories/http_client.dart';
+import 'package:werewolf/models/emotion.dart';
 
 class GptClientInvalidResponseException implements Exception {}
 
@@ -45,7 +46,7 @@ class GptClient {
       }
       return GptClientResponse(
           message: contentJson['message'].toString(),
-          emotion: contentJson['emotion'].toString());
+          emotion: Emotion.values.byName(contentJson['emotion'].toString()));
     } on FormatException catch (_) {
       throw GptClientInvalidResponseException();
     }
@@ -58,6 +59,6 @@ class GptClient {
 
 class GptClientResponse {
   final String message;
-  final String emotion;
+  final Emotion emotion;
   GptClientResponse({required this.message, required this.emotion});
 }
