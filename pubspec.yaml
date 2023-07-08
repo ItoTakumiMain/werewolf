@@ -60,6 +60,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/characters/sample/
     - assets/gpt_client/prompt.txt
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -19,7 +19,28 @@ class ViewsMainAi extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
-            return Text(snapshot.data!.message);
+            return Stack(
+              children: <Widget>[
+                Positioned(
+                    bottom: 0,
+                    right: 0,
+                    height: MediaQuery.of(context).size.height * 0.9,
+                    child: Image.asset(
+                        'assets/images/characters/sample/${snapshot.data!.emotion.name}.png')),
+                Positioned(
+                  bottom: 0,
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  width: MediaQuery.of(context).size.width,
+                  child: Container(
+                    color: Colors.black.withOpacity(0.6),
+                    child: Text(
+                      snapshot.data!.message,
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
+                ),
+              ],
+            );
           }
         },
       );
