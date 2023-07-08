@@ -19,9 +19,9 @@ class GptClient {
     final String prompt =
         await rootBundle.loadString('assets/gpt_client/prompt.txt');
 
-    const responseStartWith = '{"emotion": "';
+    const responseStartWith = '';
     final Map<String, dynamic> requestBody = {
-      'model': 'gpt-3.5-turbo',
+      'model': 'gpt-3.5-turbo-0613',
       'messages': [
         {'role': 'system', 'content': prompt},
         {'role': 'user', 'content': query},
