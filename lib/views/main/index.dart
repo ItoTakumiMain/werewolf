@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:werewolf/views/main/ai.dart';
 
 class ViewsMainIndex extends StatelessWidget {
   const ViewsMainIndex({super.key});
@@ -10,9 +11,7 @@ class ViewsMainIndex extends StatelessWidget {
         margin: const EdgeInsets.all(10.0),
         child: const Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Text('テスト'),
-            ]),
+            children: <Widget>[ViewsMainAi()]),
       ),
     );
   }
