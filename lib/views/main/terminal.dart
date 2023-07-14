@@ -42,7 +42,9 @@ class ViewsMainTerminal extends ConsumerWidget {
             color: Colors.black.withOpacity(0.6),
             child: Column(children: [
               Text(
-                conversation.messages.last.content,
+                conversation.messages.isEmpty
+                    ? ''
+                    : conversation.messages.last.content,
                 style: const TextStyle(color: Colors.white, fontSize: 20),
               ),
               TextField(controller: textController, onSubmitted: onSubmitted),

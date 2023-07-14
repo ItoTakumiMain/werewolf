@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:werewolf/models/conversation.dart';
 import 'package:werewolf/models/emotion.dart';
 import 'package:werewolf/providers/conversation_provider.dart';
 
@@ -8,8 +9,10 @@ class ViewsMainCharacterImage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Emotion emotion =
-        ref.watch(conversationProvider).messages.last.emotion;
+    final Conversation conversation = ref.watch(conversationProvider);
+    final Emotion emotion = conversation.messages.isEmpty
+        ? Emotion.neutral
+        : ref.watch(conversationProvider).messages.last.emotion;
     final String imagePath =
         'assets/images/characters/sample/${emotion.name}.png';
 
