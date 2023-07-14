@@ -49,6 +49,7 @@ class GptClient {
       }
       return GptClientResponse(
           message: contentJson['message'].toString(),
+          meaning: contentJson['meaning'].toString(),
           emotion: Emotion.values.byName(contentJson['emotion'].toString()));
     } on FormatException catch (_) {
       throw GptClientInvalidResponseException();
@@ -62,6 +63,8 @@ class GptClient {
 
 class GptClientResponse {
   final String message;
+  final String meaning;
   final Emotion emotion;
-  GptClientResponse({required this.message, required this.emotion});
+  GptClientResponse(
+      {required this.message, required this.meaning, required this.emotion});
 }

@@ -20,6 +20,7 @@ class ViewsMainTerminal extends ConsumerWidget {
       ref.read(conversationProvider.notifier).addMessage(Message(
           speaker: 'User',
           content: command,
+          meaning: '',
           emotion: Emotion.neutral,
           now: DateTime.now()));
 
@@ -28,6 +29,7 @@ class ViewsMainTerminal extends ConsumerWidget {
       ref.read(conversationProvider.notifier).addMessage(Message(
           speaker: 'アイ',
           content: response.message,
+          meaning: response.meaning,
           emotion: response.emotion,
           now: DateTime.now()));
     }

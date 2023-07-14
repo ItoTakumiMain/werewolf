@@ -8,11 +8,13 @@ void main() {
     final conversation = Conversation(messages: [
       Message(
           speaker: 'AI',
+          meaning: '天気について話したい',
           content: '今日はいい天気ですね。',
           emotion: Emotion.neutral,
           now: DateTime.now()),
       Message(
           speaker: 'User',
+          meaning: '相手の言葉を否定する',
           content: '何言ってるの？今日は雨だよ？',
           emotion: Emotion.neutral,
           now: DateTime.now()),

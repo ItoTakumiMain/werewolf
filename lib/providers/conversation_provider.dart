@@ -8,6 +8,7 @@ class ConversationNotifier extends StateNotifier<Conversation> {
       : super(Conversation(messages: [
           Message(
               content: '',
+              meaning: '',
               speaker: 'アイ',
               emotion: Emotion.neutral,
               now: DateTime.now())
